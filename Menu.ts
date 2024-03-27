@@ -1,6 +1,7 @@
 import readlinesync = require('readline-sync');
 import { Colors } from './src/util/Colors';
 import { Conta } from './src/model/Conta';
+import { ContaPoupanca } from './src/model/ContaPoupança';
 
 export function main() {
     let opcao: number;
@@ -22,6 +23,9 @@ export function main() {
     // cc1.visualizar();
     // cc1.depositar(5000);
     // cc1.visualizar();
+
+    const cp1: Conta = new ContaPoupanca(1, 321, 2, "Henrique", 1500000, "19/04/1993");
+    cp1.visualizar();
 
     while (true) {
         console.log(Colors.fg.black,Colors.bg.yellow);
@@ -88,7 +92,6 @@ export function main() {
 }
   
 /* Função com os dados da pessoa desenvolvedora */
-  
 export function sobre(): void {
      console.log(Colors.fg.black,Colors.bg.white)
      console.log("\n*****************************************************");
