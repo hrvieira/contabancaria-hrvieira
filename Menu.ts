@@ -2,30 +2,16 @@ import readlinesync = require('readline-sync');
 import { Colors } from './src/util/Colors';
 import { Conta } from './src/model/Conta';
 import { ContaPoupanca } from './src/model/ContaPoupança';
+import { ContaController } from './src/controller/ContaController';
+import { ContaCorrente } from './src/model/ContaCorrente';
 
 export function main() {
-    let opcao: number;
 
-    // let c1: Conta = new Conta(1, 123, 1, "Henrique", 1000000);
-    // c1.visualizar();
+    let opcao: number, numero, agencia, tipo, saldo, limite, aniversario: number;
+    let titular: string;
+    const tiposConta = ['Conta Corrente', 'Conta Poupança'];
 
-    // // modificando o saldo
-    // c1.set_saldo(15000000);
-    // // pegando o novo saldo
-    // console.log(c1.get_saldo());
-
-    // c1.depositar(500000);
-    // c1.visualizar();
-
-    // const cc1: Conta = new Conta(2, 456, 1, "Henrique Vieira", 1000);
-    // cc1.visualizar();
-    // cc1.sacar(10500);
-    // cc1.visualizar();
-    // cc1.depositar(5000);
-    // cc1.visualizar();
-
-    const cp1: Conta = new ContaPoupanca(1, 321, 2, "Henrique", 1500000, "19/04/1993");
-    cp1.visualizar();
+    let contas: ContaController = new ContaController();
 
     while (true) {
         console.log(Colors.fg.black,Colors.bg.yellow);
@@ -61,30 +47,69 @@ export function main() {
         switch (opcao) {
             case 1:
                 console.log("\n\nCriar Conta\n\n");
+                    agencia = readlinesync.questionInt("Digite o número da agência:\n");
+
+                    titular = readlinesync.question("Digite o nome do Titular:\n");
+
+                    tipo = readlinesync.keyInSelect(tiposConta, "Qual o tipo da conta?\n", {cancel: false}) + 1;
+
+                    saldo = readlinesync.questionFloat("Digite o saldo da conta (R$):\n");
+
+                    switch(tipo) {
+                        case 1:
+                            limite = readlinesync.questionFloat("Digite o limite da conta (R$):\n");
+                            contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
+
+                            break;
+                        case 2:
+                            aniversario = readlinesync.questionInt("Digite o dia do aniversário da Conta Poupança:\n");
+                            contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+
+                            break;
+                    }
+
+                keyPress();
                 break;
             case 2:
                 console.log("\n\nListar todas as Contas\n\n");
+                contas.listarTodas();
+
+                keyPress();
                 break;
             case 3:
                 console.log("\n\nConsultar dados da Conta - por número\n\n");
+
+                keyPress();
                 break;
             case 4:
                 console.log("\n\nAtualizar dados da Conta\n\n");
+
+                keyPress();
                 break;
             case 5:
                 console.log("\n\nApagar uma Conta\n\n");
+
+                keyPress();
                 break;
             case 6:
                 console.log("\n\nSaque\n\n");
+
+                keyPress();
                 break;
             case 7:
                 console.log("\n\nDepósito\n\n");
+
+                keyPress();
                 break;
             case 8:
                 console.log("\n\nTransferência entre Contas\n\n");
+
+                keyPress();
                 break;
             default:
                 console.log("\nOpção Inválida!\n");
+
+                keyPress();
                 break;
         }
     }
@@ -100,6 +125,13 @@ export function sobre(): void {
      console.log("github.com/hrvieira");
      console.log("*****************************************************\n");
      console.log(Colors.reset)
+}
+
+
+function keyPress(): void {
+    console.log(Colors.reset, "");
+    console.log("\nPressione enter para continuar...");
+    readlinesync.prompt();
 }
   
 main();
