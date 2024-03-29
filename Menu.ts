@@ -13,6 +13,20 @@ export function main() {
 
     let contas: ContaController = new ContaController();
 
+    // teste
+    let cc1: ContaCorrente = new ContaCorrente(contas.gerarNumero(), 123, 1, "João da Silva", 1000, 100);
+    contas.cadastrar(cc1);
+
+    let cc2: ContaCorrente = new ContaCorrente(contas.gerarNumero(), 124, 1, "Maria da Silva", 2000, 100);
+    contas.cadastrar(cc2);
+
+    let cp1: ContaPoupanca = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Mariana dos Santos", 4000, 12);
+    contas.cadastrar(cp1);
+
+    let cp2: ContaPoupanca = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Juliana Ramos", 8000, 15);
+    contas.cadastrar(cp2);
+
+
     while (true) {
         console.log(Colors.fg.black,Colors.bg.yellow);
         console.log("*****************************************************");
@@ -62,7 +76,7 @@ export function main() {
 
                             break;
                         case 2:
-                            aniversario = readlinesync.questionInt("Digite o dia do aniversário da Conta Poupança:\n");
+                            aniversario = readlinesync.questionInt("Digite a data de redimento:\n");
                             contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
 
                             break;
@@ -77,7 +91,9 @@ export function main() {
                 keyPress();
                 break;
             case 3:
-                console.log("\n\nConsultar dados da Conta - por número\n\n");
+                console.log("\n\nConsultar dados da Conta - por número\n");
+                numero = readlinesync.questionInt("Digite o número conta:\n");
+                contas.procurarPorNumero(numero);
 
                 keyPress();
                 break;

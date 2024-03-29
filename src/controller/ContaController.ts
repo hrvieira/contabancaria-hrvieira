@@ -4,11 +4,25 @@ import { ContaRepository } from "../repository/ContaRepository";
 export class ContaController implements ContaRepository{
 
      private listaContas: Array<Conta> = new Array<Conta>();
-
      numero: number = 0;
      
      procurarPorNumero(numero: number): void {
-          throw new Error("Method not implemented.");
+          let encontrada: boolean = false;
+          for(let i:number = 0; i < this.listaContas.length; i++){
+               
+               if((this.listaContas[i].get_numero()) === numero){
+                    
+                    this.listaContas[i].visualizar();
+                    encontrada = true;
+                    break;
+               }
+
+          }
+
+          if (!encontrada) {
+               console.log(`A conta número ${numero} não foi encontrada em nosso Banco.`);
+          }
+     
      }
 
      listarTodas(): void {
@@ -22,9 +36,9 @@ export class ContaController implements ContaRepository{
           console.log(`A conta ${this.numero} foi adicionada!`);
      }
 
-          gerarNumero(): number {
-               return ++ this.numero;
-          }
+     gerarNumero(): number {
+          return ++ this.numero;
+     }
 
      atualizar(conta: Conta): void {
           throw new Error("Method not implemented.");
