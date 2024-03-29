@@ -7,22 +7,22 @@ export class ContaController implements ContaRepository{
      numero: number = 0;
      
      procurarPorNumero(numero: number): void {
+          let contador: number = 0;
           let encontrada: boolean = false;
-          for(let i:number = 0; i < this.listaContas.length; i++){
-               
-               if((this.listaContas[i].get_numero()) === numero){
-                    
-                    this.listaContas[i].visualizar();
+          
+          while(!encontrada && contador < this.listaContas.length) {
+               if((this.listaContas[contador].get_numero()) === numero){
+                    console.log(`\nA conta numero ${numero} foi encontrada!\n`);
+                    this.listaContas[contador].visualizar();
                     encontrada = true;
-                    break;
                }
-
+               contador++   
           }
 
           if (!encontrada) {
                console.log(`A conta número ${numero} não foi encontrada em nosso Banco.`);
           }
-     
+          
      }
 
      listarTodas(): void {
