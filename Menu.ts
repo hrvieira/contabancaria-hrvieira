@@ -107,6 +107,7 @@ export function main() {
                 
                 console.log("Digite o número da conta:");
                 numero = readlinesync.questionInt("");
+                
                 contas.procurarPorNumero(numero);
 
                 keyPress();
@@ -118,6 +119,11 @@ export function main() {
                 break;
             case 5:
                 console.log("\n\nApagar uma Conta\n\n");
+
+                console.log("Digite o número da conta:");
+                numero = readlinesync.questionInt("");
+
+                contas.deletar(numero);
 
                 keyPress();
                 break;

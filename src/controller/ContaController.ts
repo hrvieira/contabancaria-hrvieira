@@ -13,17 +13,19 @@ export class ContaController implements ContaRepository{
           if(encontrada !== null){
                encontrada.visualizar();
           } else {
-               console.log("\nConta não encontrada!");
+               console.log("\nConta não foi encontrada!");
           }
      }
 
      listarTodas(): void {
+
           for (let conta of this.listaContas){
                conta.visualizar();
           }
      }
      
      cadastrar(conta: Conta): void {
+
           this.listaContas.push(conta);
           console.log(`A conta ${this.numero} foi adicionada!`);
      }
@@ -33,7 +35,15 @@ export class ContaController implements ContaRepository{
      }
      
      deletar(numero: number): void {
-          throw new Error("Method not implemented.");
+          
+          let encontrada = this.buscarConta(numero);
+
+          if(encontrada !== null){
+               this.listaContas.splice(this.listaContas.indexOf(encontrada), 1);
+               console.log(`A conta número ${numero} foi excluída com êxito!`);
+          } else {
+               console.log("\nConta não foi encontrada!");
+          }
      }
      
      sacar(numero: number, valor: number): void {
