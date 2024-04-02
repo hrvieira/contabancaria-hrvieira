@@ -10,6 +10,7 @@ export function main() {
     let opcao: number, numero, agencia, tipo, saldo, limite, aniversario: number;
     let titular: string;
     const tiposConta = ['Conta Corrente', 'Conta Poupança'];
+    const sim:any = ['Sim','Não'];
 
     let contas: ContaController = new ContaController();
 
@@ -107,13 +108,84 @@ export function main() {
                 
                 console.log("Digite o número da conta:");
                 numero = readlinesync.questionInt("");
-                
+
                 contas.procurarPorNumero(numero);
 
                 keyPress();
                 break;
             case 4:
                 console.log("\n\nAtualizar dados da Conta\n\n");
+                
+                console.log("Digite o número da conta:");
+                numero = readlinesync.questionInt("");
+
+                let conta = contas.buscarConta(numero);
+
+                if(conta !== null){
+
+                    console.log("Deseja atualizar a agência?");
+                    agencia = readlinesync.keyInSelect(sim, "", {cancel: false}) + 1;
+
+                    if(agencia === 1){
+
+                        console.log("Digite o número da agência:");
+                        agencia = readlinesync.questionInt("");
+                        
+                    } else {
+                        agencia = conta.agencia
+                    }
+
+                    console.log("Deseja atualizar o nome do titular?");
+                    let titularConta = readlinesync.keyInSelect(sim, "", {cancel: false}) + 1;
+
+                    if(titularConta === 1){
+
+                        console.log("Digite o nome do Titular:");
+                        titular = readlinesync.question("");
+                        
+                    } else {
+                        titular = conta.titular
+                    }
+
+                    tipo = conta.tipo;
+
+                    console.log("Deseja atualizar o saldo?");
+                    let novoSaldo = readlinesync.keyInSelect(sim, "", {cancel: false}) + 1;
+
+                    if(novoSaldo === 1){
+
+                        console.log("Digite o saldo da conta (R$):");
+                        saldo = readlinesync.questionFloat("");
+                        
+                    } else {
+                        saldo = conta.saldo;
+                    }                    
+
+                    switch(tipo) {
+                        case 1:
+                            console.log("Digite o limite da conta (R$):")
+                            limite = readlinesync.questionFloat("");
+                            contas.atualizar(
+                                new ContaCorrente(numero, agencia, tipo, titular, saldo, limite)
+                            );
+                            
+                            break;
+                        case 2:
+                            do {
+                                console.log("Digite a data de redimento(entre 1 e 30):")
+                                aniversario = readlinesync.questionInt("");
+                            } while (aniversario < 1 || aniversario > 30);
+
+                            contas.atualizar(
+                                new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario)
+                            );
+
+                            break;
+                    }
+
+                } else {
+                    console.log("\nConta não foi encontrada!");
+                }
 
                 keyPress();
                 break;

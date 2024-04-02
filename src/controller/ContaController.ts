@@ -31,7 +31,15 @@ export class ContaController implements ContaRepository{
      }
 
      atualizar(conta: Conta): void {
-          throw new Error("Method not implemented.");
+          
+          let encontrada = this.buscarConta(conta.numero);
+
+          if(encontrada !== null){
+               this.listaContas[this.listaContas.indexOf(encontrada)] = conta;
+               console.log(`A conta número ${conta.numero} foi atualizada com êxito!`);
+          } else {
+               console.log("\nConta não foi encontrada!");
+          }
      }
      
      deletar(numero: number): void {
@@ -67,7 +75,7 @@ export class ContaController implements ContaRepository{
 
      public buscarConta(numero: number): Conta | null {
           for (let conta of this.listaContas){
-               if(conta.get_numero() === numero){
+               if(conta.numero === numero){
                     return conta;
                }
           }
