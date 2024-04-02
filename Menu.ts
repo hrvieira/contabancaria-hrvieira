@@ -104,7 +104,9 @@ export function main() {
                 break;
             case 3:
                 console.log("\n\nConsultar dados da Conta - por número\n");
-                numero = readlinesync.questionInt("Digite o número conta:\n");
+                
+                console.log("Digite o número da conta:");
+                numero = readlinesync.questionInt("");
                 contas.procurarPorNumero(numero);
 
                 keyPress();

@@ -7,22 +7,14 @@ export class ContaController implements ContaRepository{
      numero: number = 0;
      
      procurarPorNumero(numero: number): void {
-          let contador: number = 0;
-          let encontrada: boolean = false;
-          
-          while(!encontrada && contador < this.listaContas.length) {
-               if((this.listaContas[contador].get_numero()) === numero){
-                    console.log(`\nA conta numero ${numero} foi encontrada!\n`);
-                    this.listaContas[contador].visualizar();
-                    encontrada = true;
-               }
-               contador++   
-          }
 
-          if (!encontrada) {
-               console.log(`A conta número ${numero} não foi encontrada em nosso Banco.`);
+          let encontrada = this.buscarConta(numero);
+
+          if(encontrada !== null){
+               encontrada.visualizar();
+          } else {
+               console.log("\nConta não encontrada!");
           }
-          
      }
 
      listarTodas(): void {
@@ -34,10 +26,6 @@ export class ContaController implements ContaRepository{
      cadastrar(conta: Conta): void {
           this.listaContas.push(conta);
           console.log(`A conta ${this.numero} foi adicionada!`);
-     }
-
-     gerarNumero(): number {
-          return ++ this.numero;
      }
 
      atualizar(conta: Conta): void {
@@ -58,6 +46,23 @@ export class ContaController implements ContaRepository{
      
      transferir(numeroOrigem: number, numeroDestino: number, valor: number): void {
           throw new Error("Method not implemented.");
+     }
+
+
+     // Métodos auxiliares - separados
+
+     public gerarNumero(): number {
+          return ++ this.numero;
+     }
+
+     public buscarConta(numero: number): Conta | null {
+          for (let conta of this.listaContas){
+               if(conta.get_numero() === numero){
+                    return conta;
+               }
+          }
+
+          return null;
      }
      
 }
