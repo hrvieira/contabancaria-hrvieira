@@ -31,7 +31,7 @@ export function main() {
         console.log(Colors.fg.black,Colors.bg.yellow);
         console.log("*****************************************************");
         console.log("                                                     ");
-        console.log("                BANCO DO BRAZIL COM Z                ");
+        console.log("                    VIEIRA BANK'S                    ");
         console.log("                                                     ");
         console.log("*****************************************************");
         console.log("                                                     ");
@@ -61,22 +61,34 @@ export function main() {
         switch (opcao) {
             case 1:
                 console.log("\n\nCriar Conta\n\n");
-                    agencia = readlinesync.questionInt("Digite o número da agência:\n");
+                    // usando console.log para driblar os problemas de acentuação
+                    console.log("Digite o número da agência:");
+                    agencia = readlinesync.questionInt("");
 
-                    titular = readlinesync.question("Digite o nome do Titular:\n");
+                    console.log("Digite o nome do Titular:");
+                    titular = readlinesync.question("");
 
-                    tipo = readlinesync.keyInSelect(tiposConta, "Qual o tipo da conta?\n", {cancel: false}) + 1;
+                    console.log("Qual o tipo da conta?");
+                    tipo = readlinesync.keyInSelect(tiposConta, "", {cancel: false}) + 1;
 
-                    saldo = readlinesync.questionFloat("Digite o saldo da conta (R$):\n");
+                    console.log("Digite o saldo da conta (R$):");
+                    saldo = readlinesync.questionFloat("");
 
                     switch(tipo) {
                         case 1:
-                            limite = readlinesync.questionFloat("Digite o limite da conta (R$):\n");
-                            contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
-
+                            console.log("Digite o limite da conta (R$):")
+                            limite = readlinesync.questionFloat("");
+                            contas.cadastrar(
+                                new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite)
+                            );
+                            
                             break;
                         case 2:
-                            aniversario = readlinesync.questionInt("Digite a data de redimento:\n");
+                            do {
+                                console.log("Digite a data de redimento(entre 1 e 30):")
+                                aniversario = readlinesync.questionInt("");
+                            } while (aniversario < 1 || aniversario > 30);
+
                             contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
 
                             break;
