@@ -6,6 +6,18 @@ export class ContaController implements ContaRepository{
      private listaContas: Array<Conta> = new Array<Conta>();
      numero: number = 0;
      
+     procurarPorTitular(titular: string): void {
+
+         let listaContasPorTitula = this.listaContas.filter(
+               c => c.titular.toUpperCase().includes(titular.toUpperCase())
+         )
+
+         for ( let conta of listaContasPorTitula) {
+               conta.visualizar();
+
+         }
+     }
+
      procurarPorNumero(numero: number): void {
 
           let encontrada = this.buscarConta(numero);
@@ -55,15 +67,44 @@ export class ContaController implements ContaRepository{
      }
      
      sacar(numero: number, valor: number): void {
-          throw new Error("Method not implemented.");
+          
+          let encontrada = this.buscarConta(numero);
+
+          if(encontrada !== null){
+               if(encontrada.sacar(valor) === true){
+                    console.log(`O saque na Conta número ${numero} foi efetuado com êxito!`);
+               }
+          } else {
+               console.log("\nConta não foi encontrada!");
+          }
      }
      
      depositar(numero: number, valor: number): void {
-          throw new Error("Method not implemented.");
+          let encontrada = this.buscarConta(numero);
+
+          if(encontrada !== null){
+               encontrada.depositar(valor);
+               console.log(`O depósito na Conta número ${numero} foi efetuado com êxito!`);
+          } else {
+               console.log("\nConta não foi encontrada!");
+          }
      }
      
      transferir(numeroOrigem: number, numeroDestino: number, valor: number): void {
-          throw new Error("Method not implemented.");
+          
+          let contaOrigem = this.buscarConta(numeroOrigem);
+          let contaDestino = this.buscarConta(numeroDestino);
+
+          if(contaOrigem !== null && contaDestino !== null){
+               if(contaOrigem.sacar(valor) === true){
+                    contaDestino.depositar(valor);
+                    console.log(`Transferência de ${numeroOrigem} para ${numeroDestino} realizada com êxito!`)
+               }
+          } else {
+               console.log("\nConta origem ou Conta destino não foi encontrada!");
+          }
+
+
      }
 
 

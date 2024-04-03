@@ -7,7 +7,7 @@ import { ContaCorrente } from './src/model/ContaCorrente';
 
 export function main() {
 
-    let opcao: number, numero, agencia, tipo, saldo, limite, aniversario: number;
+    let opcao: number, numero, agencia, tipo, saldo, limite, aniversario, valor, numeroDestino: number;
     let titular: string;
     const tiposConta = ['Conta Corrente', 'Conta Poupança'];
     const sim:any = ['Sim','Não'];
@@ -44,7 +44,8 @@ export function main() {
         console.log("            6 - Sacar                                ");
         console.log("            7 - Depositar                            ");
         console.log("            8 - Transferir valores entre Contas      ");
-        console.log("            9 - Sair                                 ");
+        console.log("            9 - Buscar conta por titular             ");
+        console.log("            0 - Sair                                 ");
         console.log("                                                     ");
         console.log("*****************************************************");
         console.log("                                                     ",
@@ -202,18 +203,55 @@ export function main() {
             case 6:
                 console.log("\n\nSaque\n\n");
 
+                console.log("Digite o número da conta:");
+                numero = readlinesync.questionInt("");
+
+                console.log("Digite o valor do saque (R$):");
+                valor = readlinesync.questionFloat("");
+
+                contas.sacar(numero, valor);
+
                 keyPress();
                 break;
             case 7:
                 console.log("\n\nDepósito\n\n");
+
+                console.log("Digite o número da conta:");
+                numero = readlinesync.questionInt("");
+
+                console.log("Digite o valor do deposito (R$):");
+                valor = readlinesync.questionFloat("");
+
+                contas.depositar(numero, valor);
 
                 keyPress();
                 break;
             case 8:
                 console.log("\n\nTransferência entre Contas\n\n");
 
+                console.log("Digite o número da conta origem:");
+                numero = readlinesync.questionInt("");
+                
+                console.log("Digite o número da conta destino:");
+                numeroDestino = readlinesync.questionInt("");
+
+                console.log("Digite o valor da transferência (R$):");
+                valor = readlinesync.questionFloat("");
+
+                contas.transferir(numero, numeroDestino, valor);
+
                 keyPress();
                 break;
+            case 9:
+                console.log("\n\nConsultar conta por titular\n\n");
+
+                console.log("Digite o nome do Titular:");
+                titular = readlinesync.question("");
+
+                contas.procurarPorTitular(titular);
+                
+                break;
+
             default:
                 console.log("\nOpção Inválida!\n");
 
